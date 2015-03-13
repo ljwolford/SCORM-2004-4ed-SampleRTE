@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project name="ADL" default="buildSQLite" >
+    <description>Makes sure the correct dbs/tables are created</description>
+
+    <property name="sqldriver.jar"  value="${lib}/sqlite-jdbc-3.7.15-M1.jar"/>
+    <property name="db.name"        value="programmers.db"/>
+    <property name="url"            value="jdbc:sqlite:data"/>
+    <property name="driver"         value="org.sqlite.JDBC"/>
+    <property name="userid"         value="root"/>
+    <property name="password"       value="password"/>
+
+    <target name="echo">
+        <echo>Checking SQLite databases and tables</echo>
+    </target>
+
+    <target name="sqldrop">
+        <sql
+                driver="${driver}"
+                url="${url}/${db.name}"
+                userid="${userid}"
+                password="${password}"
+                print="yes"
+                classpath="${sqldriver.jar}">
+            CREATE DATABASE IF NOT EXISTS 'SampleRTE';
+            CREATE DATABASE IF NOT EXISTS 'GlobalObjectives';
+        </sql>
+    </target>
+
+</project>

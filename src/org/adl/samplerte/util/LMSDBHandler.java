@@ -98,9 +98,11 @@ public class LMSDBHandler
             {
                System.out.println("  ::--> Connecting to the Obj DB");
             }
-           
-            String driverName = "sun.jdbc.odbc.JdbcOdbcDriver";
-            String connectionURL = "jdbc:odbc:SCORM4EDGlobalObjs111";
+
+             String driverName = "org.sqlite.JDBC";
+             String connectionURL = "jdbc:sqlite:GlobalObjectives.db"
+//            String driverName = "sun.jdbc.odbc.JdbcOdbcDriver";
+//            String connectionURL = "jdbc:odbc:SCORM4EDGlobalObjs111";
 
             java.util.Properties prop = new java.util.Properties();
             prop.put("charSet", "utf-8");

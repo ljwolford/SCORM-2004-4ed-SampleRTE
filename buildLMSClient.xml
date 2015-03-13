@@ -31,10 +31,16 @@
                 <pathelement location="${lib}/commons-fileupload-1.1.jar"/>
                 <pathelement location="${lib}/commons-io-1.2.jar"/>
                 <pathelement location="${lib}/jdom.jar"/>
-                <pathelement location="${lib}/reload-diva.jar"/>               
+                <pathelement location="${lib}/reload-diva.jar"/>
+                <pathelement location="${lib}/sqlite-jdbc-3.7.15-M1.jar"/>
             </classpath>                            
         </javac>
     </target>
+
+    <!-- This will build the necessary dbs and tables in SQLite-->
+    <target name="SQLITE" depends="compile" >
+        <ant antfile="buildSQLite.xml"  />
+    </target >
 
     <target name="buildLmsClientJar" depends="compile">
         <echo message="building jar file from class files"/>

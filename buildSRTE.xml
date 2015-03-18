@@ -40,7 +40,13 @@
        <ant antfile="buildcmid.xml" target="SRTE" />
     </target>
 
-    <target name="buildLMSClient" depends="buildCmiDataModel">
+    <!-- This will build the necessary dbs and tables in SQLite-->
+    <target name="buildSQLite" depends="buildCmiDataModel" >
+        <echo message="Setting up the databases"/>
+        <ant antfile="buildSQLite.xml" target="SRTE" />
+    </target>
+
+    <target name="buildLMSClient" depends="buildSQLite">
         <ant antfile="buildLMSClient.xml" />
     </target>
 

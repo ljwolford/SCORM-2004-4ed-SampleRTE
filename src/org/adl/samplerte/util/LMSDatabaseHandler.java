@@ -95,7 +95,7 @@ public class LMSDatabaseHandler
             System.out.println("  ::--> Connecting to the DB");
          }
           String driverName = "org.sqlite.JDBC";
-          String connectionURL = "jdbc:sqlite:SampleRTE.db"
+          String connectionURL = "jdbc:sqlite:SampleRTE.db";
 //         String driverName = "sun.jdbc.odbc.JdbcOdbcDriver";
 //         String connectionURL = "jdbc:odbc:SCORM4EDSRTE111";
          
@@ -105,7 +105,6 @@ public class LMSDatabaseHandler
 
           Class.forName(driverName).newInstance();
           conn = DriverManager.getConnection(connectionURL, prop);
-
       }
       catch ( SQLException ex )
       {              

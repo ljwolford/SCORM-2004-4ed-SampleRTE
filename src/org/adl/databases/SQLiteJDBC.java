@@ -22,6 +22,8 @@ public class SQLiteJDBC{
             sqlStuff1.add("CREATE TABLE IF NOT EXISTS SCOComments(CommentID INTEGER PRIMARY KEY AUTOINCREMENT,ActivityID BIGINT NOT NULL,Comment LONGTEXT,CommentDateTime CHAR(50),CommentLocation LONGTEXT);");
             sqlStuff1.add("CREATE TABLE IF NOT EXISTS UserCourseInfo(UserID CHAR(50),CourseID CHAR(50),SuspendAll INTEGER NOT NULL CHECK(SuspendAll IN (0,1)));");
             sqlStuff1.add("CREATE TABLE IF NOT EXISTS UserInfo(UserId CHAR(50) PRIMARY KEY,LastName CHAR(50),FirstName CHAR(50),Admin INTEGER NOT NULL CHECK(Admin IN (0,1)),Password CHAR(50),Active INTEGER NOT NULL CHECK(Active IN (0,1)),AudioLevel CHAR(50),AudioCaptioning BIGINT DEFAULT 0,DeliverySpeed CHAR(50),Language CHAR(50) DEFAULT '\"\"');");
+            sqlStuff1.add("INSERT OR IGNORE INTO UserInfo VALUES ('admin', 'Admin', 'Joe', 1, 'admin', 1, '1.0', 0, '1.0', '');");
+            sqlStuff1.add("INSERT OR IGNORE INTO ApplicationData VALUES ('nextCourseID', '', 1);");
             for (String sql: sqlStuff1){
                 stmt.executeUpdate(sql);
             }
@@ -43,6 +45,6 @@ public class SQLiteJDBC{
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Created tables successfuly");
+        System.out.println("Created tables successfully");
     }
 }

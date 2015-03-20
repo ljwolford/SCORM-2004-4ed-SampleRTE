@@ -77,7 +77,7 @@ public class UserService
             
       if (iOnlyActive == true)
       {
-    	  sqlSelectUser = sqlSelectUser + " WHERE Active = yes";
+    	  sqlSelectUser = sqlSelectUser + " WHERE Active = 1";
       }
       
       try

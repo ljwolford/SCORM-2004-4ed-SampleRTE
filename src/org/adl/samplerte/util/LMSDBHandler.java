@@ -100,7 +100,7 @@ public class LMSDBHandler
             }
 
              String driverName = "org.sqlite.JDBC";
-             String connectionURL = "jdbc:sqlite:GlobalObjectives.db"
+             String connectionURL = "jdbc:sqlite:GlobalObjectives.db";
 //            String driverName = "sun.jdbc.odbc.JdbcOdbcDriver";
 //            String connectionURL = "jdbc:odbc:SCORM4EDGlobalObjs111";
 
@@ -109,7 +109,6 @@ public class LMSDBHandler
                         
             Class.forName(driverName).newInstance();
             conn = DriverManager.getConnection(connectionURL, prop);
-
             if ( _Debug )
             {
                System.out.println("  ::--> Connection successful");

@@ -1,143 +1,15 @@
 <?xml version="1.0"?>
-<project name="ADL" default="SRTE" >
+<project name="ADL" default="run" >
     <description>Executes java file that makes sure the correct dbs/tables are created</description>
 
-    <target name="init"></target>
-
-    <target name="compile" depends="init">
-        <javac destdir="${buildDir}" srcdir="${src}" >
-            <classpath>
-                <pathelement location="${lib}/sqlite-jdbc-3.7.2.jar"/>
-            </classpath>
+    <target name="compile">
+        <javac destdir="${buildDir}/org/adl/databases" srcdir="${src}/org/adl/databases">
         </javac>
     </target>
 
-    <target name="run">
+    <target name="run" depends="compile">
         <java classname="SQLiteJDBC">
-            <classpath>
-                <pathelement location="${lib}/sqlite-jdbc-3.7.2.jar"/>
-            </classpath>
+            <classpath path="${buildDir}/org/adl/databases;${lib}/sqlite-jdbc-3.7.2.jar" />
         </java>
     </target>
-
-    <target name="buildSQLiteJar" depends="run">
-        <echo message="building jar file from class files"/>
-        <jar destfile="${buildDir}/${sqliteJar}" basedir="${buildDir}"
-             includes=""/>
-    </target>
-    <target name="SRTE" depends="buildSQLiteJar"></target>
 </project>
-
-
-        <!--<property name="sqldriver.jar"  value="C:\Users\wolfordl\SCORM-2004-4ed-SampleRTE\lib\sqlite-jdbc-3.7.2.jar"/>
-        <property name="url"            value="jdbc:sqlite:C:\Users\wolfordl\SCORM-2004-4ed-SampleRTE\databases"/>
-        <property name="driver"         value="org.sqlite.JDBC"/>
-        <property name="userid"         value=""/>
-        <property name="password"       value=""/>
-        <property name="srte.name"      value="SampleRTE.db"/>
-        <property name="go.name"        value="GlobalObjectives.db"/>
-
-        <target name="sqlSetupSRTE" depends="jar">-->
-        <!--<echo message="building sqlite tables"/>-->
-        <!--<echo message="${sqldriver.jar}"/>-->
-        <!--<sql-->
-            <!--driver="${driver}"-->
-            <!--url="${url}/${srte.name}"-->
-            <!--userid="${userid}"-->
-            <!--password="${password}"-->
-            <!--print="yes"-->
-            <!--classpath="${sqldriver.jar}">-->
-            <!--CREATE TABLE IF NOT EXISTS ApplicationData(-->
-                <!--dataName CHAR(50) PRIMARY KEY,-->
-                <!--textValue CHAR(50),-->
-                <!--numberValue BIGINT-->
-            <!--);-->
-            <!--CREATE TABLE IF NOT EXISTS CourseInfo(-->
-                <!--CourseID CHAR(50) PRIMARY KEY,-->
-                <!--CourseTitle CHAR(200),-->
-                <!--ImportDateTime CHAR(50),-->
-                <!--Active INTEGER NOT NULL CHECK(Active IN (0,1)),-->
-                <!--Start INTEGER NOT NULL CHECK(Start IN (0,1)),-->
-                <!--TOC INTEGER NOT NULL CHECK(TOC IN (0,1))-->
-            <!--);-->
-            <!--CREATE TABLE IF NOT EXISTS ItemInfo(-->
-                <!--ActivityID INTEGER PRIMARY KEY AUTOINCREMENT,-->
-                <!--CourseID CHAR(255),-->
-                <!--OrganizationIdentifier CHAR(255),-->
-                <!--ItemIdentifier CHAR(255),-->
-                <!--ResourceIdentifier CHAR(255),-->
-                <!--Launch LONGTEXT,-->
-                <!--Type CHAR(50),-->
-                <!--Title CHAR(255),-->
-                <!--ParameterString LONGTEXT,-->
-                <!--DataFromLMS LONGTEXT,-->
-                <!--MinNormalizedMeasure CHAR(50),-->
-                <!--AttemptAbsoluteDurationLimit CHAR(255),-->
-                <!--TimeLimitAction CHAR(255),-->
-                <!--CompletionThreshold CHAR(255),-->
-                <!--Next INTEGER NOT NULL CHECK(Next IN (0,1)),-->
-                <!--Previous INTEGER NOT NULL CHECK(Previous IN (0,1)),-->
-                <!--Exit INTEGER NOT NULL CHECK(Exit IN (0,1)),-->
-                <!--ExitAll INTEGER NOT NULL CHECK(ExitAll IN (0,1)),-->
-                <!--Abandon INTEGER NOT NULL CHECK(Abandon IN (0,1)),-->
-                <!--Suspend INTEGER NOT NULL CHECK(Suspend IN (0,1))-->
-            <!--);-->
-            <!--CREATE TABLE IF NOT EXISTS SCOComments(-->
-                <!--CommentID INTEGER PRIMARY KEY AUTOINCREMENT,-->
-                <!--ActivityID BIGINT NOT NULL,-->
-                <!--Comment LONGTEXT,-->
-                <!--CommentDateTime CHAR(50),-->
-                <!--CommentLocation LONGTEXT-->
-            <!--);-->
-            <!--CREATE TABLE IF NOT EXISTS UserCourseInfo(-->
-                <!--UserID CHAR(50),-->
-                <!--CourseID CHAR(50),-->
-                <!--SuspendAll INTEGER NOT NULL CHECK(SuspendAll IN (0,1))-->
-            <!--);-->
-            <!--CREATE TABLE IF NOT EXISTS UserInfo(-->
-                <!--UserId CHAR(50) PRIMARY KEY,-->
-                <!--LastName CHAR(50),-->
-                <!--FirstName CHAR(50),-->
-                <!--Admin INTEGER NOT NULL CHECK(Admin IN (0,1)),-->
-                <!--Password CHAR(50),-->
-                <!--Active INTEGER NOT NULL CHECK(Active IN (0,1)),-->
-                <!--AudioLevel CHAR(50),-->
-                <!--AudioCaptioning BIGINT DEFAULT 0,-->
-                <!--DeliverySpeed CHAR(50),-->
-                <!--Language CHAR(50) DEFAULT '""'-->
-            <!--);-->
-        <!--</sql>-->
-    <!--</target>-->
-
-    <!--<target name="sqlSetupGO" depends="sqlSetupSRTE">-->
-        <!--<sql-->
-            <!--driver="${driver}"-->
-            <!--url="${url}/${go.name}"-->
-            <!--userid="${userid}"-->
-            <!--password="${password}"-->
-            <!--print="yes"-->
-            <!--classpath="${sqldriver.jar}">-->
-        <!--CREATE TABLE IF NOT EXISTS CourseStatus(-->
-                <!--courseID CHAR(255),-->
-                <!--learnerID CHAR(255),-->
-                <!--satisfied CHAR(50) DEFAULT 'unknown',-->
-                <!--measure CHAR(50) DEFAULT 'unknown',-->
-                <!--completed CHAR(50) DEFAULT 'unknown',-->
-                <!--progmeasure CHAR(50) DEFAULT 'unknown',-->
-                <!--PRIMARY KEY (courseID, learnerID)-->
-            <!--);-->
-            <!--CREATE TABLE IF NOT EXISTS Objectives(-->
-                <!--objID LONGTEXT NOT NULL,-->
-                <!--learnerID CHAR(255) NOT NULL,-->
-                <!--satisfied CHAR(50),-->
-                <!--measure CHAR(50) DEFAULT 'unknown',-->
-                <!--scopeID CHAR(255),-->
-                <!--rawscore CHAR(50) DEFAULT 'unknown',-->
-                <!--minscore CHAR(50) DEFAULT 'unknown',-->
-                <!--maxscore CHAR(50) DEFAULT 'unknown',-->
-                <!--progressmeasure CHAR(50) DEFAULT 'unknown',-->
-                <!--completion CHAR(50) DEFAULT 'unknown',-->
-                <!--PRIMARY KEY (objID, learnerID, scopeID)-->
-            <!--);-->
-        <!--</sql>-->
-    <!--</target>-->

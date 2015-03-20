@@ -43,7 +43,7 @@
     <!-- This will build the necessary dbs and tables in SQLite-->
     <target name="buildSQLite" depends="buildCmiDataModel" >
         <echo message="Setting up the databases"/>
-        <ant antfile="buildSQLite.xml" target="SRTE" />
+        <ant antfile="buildSQLite.xml" target="run" />
     </target>
 
     <target name="buildLMSClient" depends="buildSQLite">
@@ -71,18 +71,18 @@
         </copy>
 
         <!-- Tomcat Modifications -->
-        <copy todir="${tomcatDir}/WEB-INF" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/WEB-INF/web.xml" />
+        <copy todir="${tomcatDir}/WEB-INF" file="${ccHome}/SampleRTE/Tomcat_Modifications/WEB-INF/web.xml" />
 
-        <copy todir="${tomcatDir}/server/lib" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/server/lib/catalina.jar" />
-        <copy todir="${tomcatDir}/conf" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/conf/web.xml" />
-        <copy todir="${tomcatDir}/conf" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/conf/server.xml" />
-        <copy todir="${tomcatDir}/conf" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/conf/logging.properties" />
+        <copy todir="${tomcatDir}/server/lib" file="${ccHome}/SampleRTE/Tomcat_Modifications/server/lib/catalina.jar" />
+        <copy todir="${tomcatDir}/conf" file="${ccHome}/SampleRTE/Tomcat_Modifications/conf/web.xml" />
+        <copy todir="${tomcatDir}/conf" file="${ccHome}/SampleRTE/Tomcat_Modifications/conf/server.xml" />
+        <copy todir="${tomcatDir}/conf" file="${ccHome}/SampleRTE/Tomcat_Modifications/conf/logging.properties" />
 
-        <copy todir="${tomcatDir}/bin" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/bin/newstartup.bat" />
-        <copy todir="${tomcatDir}/bin" file="${ccHome}/source/SampleRTE/Tomcat_Modifications/bin/newshutdown.bat" />
+        <copy todir="${tomcatDir}/bin" file="${ccHome}/SampleRTE/Tomcat_Modifications/bin/newstartup.bat" />
+        <copy todir="${tomcatDir}/bin" file="${ccHome}/SampleRTE/Tomcat_Modifications/bin/newshutdown.bat" />
 
         <copy todir="${tomcatDir}" >
-        <fileset dir="${ccHome}/source/SampleRTE/LMSClient/" />
+        <fileset dir="${ccHome}/SampleRTE/LMSClient/" />
         </copy>
 
 	  <copy todir="${tomcatDir}/css/" >
@@ -90,11 +90,11 @@
         </copy>
 
        <copy todir="${tomcatDir}/xml" >
-            <fileset dir="${ccHome}/source/xml" />
+            <fileset dir="${ccHome}/xml" />
         </copy>
 
         <copy todir="${CATALINA_HOME}/common/endorsed/" >
-            <fileset dir="${ccHome}/source/lib" >
+            <fileset dir="${ccHome}/lib" >
                 <include name="saxon8.jar" />
                 <include name="jdom.jar" />
                 <include name="jaxen-1.1.1.jar" />
@@ -108,7 +108,7 @@
         </copy>
          <!--start add for java file upload -->
         <copy todir="${CATALINA_HOME}/common/lib/" >
-            <fileset dir="${ccHome}/source/lib" >
+            <fileset dir="${ccHome}/lib" >
                 <include name="saxon8.jar" />
                 <include name="jdom.jar" />
                 <include name="jaxen-1.1.1.jar" />
@@ -121,7 +121,7 @@
         <!--end add for java file upload -->
 
         <copy todir="${CATALINA_HOME}/webapps/adl" >
-            <fileset dir="${ccHome}/source/lib" >
+            <fileset dir="${ccHome}/lib" >
                 <include name="joda-time-1.1.jar" />
             </fileset>
         </copy>
@@ -129,6 +129,18 @@
         <copy todir="${tomcatDir}/WEB-INF/lib/" >
             <fileset dir="${buildDir}" >
                 <include name="*.jar" />
+            </fileset>
+        </copy>
+
+        <copy todir="${env.CATALINA_HOME}/bin" >
+            <fileset dir="${ccHome}/databases" >
+                <include name="*.db" />
+            </fileset>
+        </copy>
+
+        <copy todir="${tomcatDir}/WEB-INF/lib/" >
+            <fileset dir="${ccHome}/lib" >
+                <include name="sqlite-jdbc-3.7.2.jar" />
             </fileset>
         </copy>
 
@@ -140,7 +152,7 @@
 
         <!--Copy adllog.properties-->
        <copy todir="${tomcatDir}/config/" >
-           <fileset dir="${ccHome}/source/config/" >
+           <fileset dir="${ccHome}/config/" >
            </fileset>
        </copy> 
 
